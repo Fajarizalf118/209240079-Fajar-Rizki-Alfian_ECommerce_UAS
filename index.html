@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halaman E-commerce Sederhana</title>
+  <link rel="stylesheet" href="Style CSS/CSS.css">
+  <script src="JS/JavaScript.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-kiri">
+        <h1>UrbanStride</h1>
+      </div>
+      <div class="nav-tengah">
+        <a href="#beranda">Beranda</a>
+        <a href="#produk">Produk</a>
+        <a href="#tentang-kami">Tentang Kami</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+      <div class="nav-kanan">
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Cari...">
+          <button onclick="filterProduk()"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-login">
+          <button class="cart-btn" onclick="bukaKeranjang()">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+        </div>
+        <a href="#" onclick="bukaLogin()">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Modal Produk -->
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeProductModal()">&times;</span>
+    <img id="modalImage" src="" alt="Gambar Produk" style="width:100%;border-radius:10px;margin-bottom:10px;">
+    <h3 id="modalName"></h3>
+    <p id="modalDescription"></p>
+    <p id="modalPrice" style="font-weight:bold;"></p>
+    <button onclick="addToCartFromModal()">Tambah ke Keranjang</button>
+    <button onclick="beliLangsung()">Beli</button>
+  </div>
+</div>
+
+    <!-- Popup Modal Login -->
+    <aside id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="tutupLogin()">&times;</span>
+        <h2>Login</h2>
+        <form onsubmit="return loginSimulasi()">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" placeholder="Username" required />
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" placeholder="Password" required />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Toast Notification -->
+    <div id="toast" style="display:none;position:fixed;top:30px;left:50%;transform:translateX(-50%);z-index:9999;background:#333;color:#fff;padding:14px 24px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);font-size:15px;">Produk ditambahkan ke keranjang!</div>
+
+    <section id="beranda" class="hero">
+      <div class="hero-text">
+        <h1>Selamat Datang di <span class="brand">UrbanStride Store</span></h1>
+        <p>Temukan fashion terbaik, stylish, dan nyaman hanya di sini.</p>
+      </div>
+      <div class="hero-image">
+        <img src="images/Banner.jpg" alt="Sepatu Keren" />
+      </div>
+    </section>
+
+    <!-- Pop-Up Keranjang -->
+    <div id="cartModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="tutupKeranjang()">&times;</span>
+        <h2>Keranjang Belanja</h2>
+        <div id="cartItems">
+          <!-- Produk yang ditambahkan ke keranjang akan muncul di sini -->
+        </div>
+        <button onclick="checkout()">Checkout</button>
+      </div>
+    </div>
+
+    <section id="produk">
+      <div class="section-gap">
+        <h2 class="produk-title">Produk</h2>
+      </div>
+
+      <div class="produk-container">
+
+        <article class="produk">
+          <img src="images/Produk1.jpg">
+          <h3>NEW BALANCE 740 UNISEX</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Sepatu high-top klasik dengan desain retro dan dukungan maksimal untuk pergelangan kaki. Dibuat dengan bahan kulit dan mesh premium, cocok untuk tampil stylish baik di lapangan maupun sehari-hari.</p>
+          <p>Rp 1.799.000</p>
+          <button onclick="openProductModal(
+          'NEW BALANCE 740 UNISEX',
+          1799000,
+          'images/Produk1.jpg',
+          'Sepatu high-top klasik dengan desain retro dan dukungan maksimal untuk pergelangan kaki. Dibuat dengan bahan kulit dan mesh premium, cocok untuk tampil stylish baik di lapangan maupun sehari-hari.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk2.jpg" alt="NEW BALANCE 530 UNISEX">
+          <h3>NEW BALANCE 530 UNISEX</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Sepatu retro running dengan teknologi ABZORB untuk kenyamanan maksimal. Desain kasual yang ringan dan stylish, ideal untuk aktivitas sehari-hari dan gaya athleisure.</p>
+          <p>Rp 1.599.000</p>
+          <button onclick="openProductModal(
+          'NEW BALANCE 530 UNISEX',
+          1599000,
+          'images/Produk2.jpg',
+          'Sepatu retro running dengan teknologi ABZORB untuk kenyamanan maksimal. Desain kasual yang ringan dan stylish, ideal untuk aktivitas sehari-hari dan gaya athleisure.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk3.jpg" alt="NEW BALANCE 2002R">
+          <h3>NEW BALANCE 2002R</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Sepatu dad-shoe modern dengan teknologi ABZORB + N-ergy, memberikan kenyamanan dan stabilitas luar biasa. Desain elegan dan versatile, cocok untuk tampil santai namun tetap fashionable.</p>
+          <p>Rp 2.599.000</p>
+          <button onclick="openProductModal(
+          'NEW BALANCE 2002R',
+          2599000,
+          'images/Produk3.jpg',
+          'Sepatu dad-shoe modern dengan teknologi ABZORB + N-ergy, memberikan kenyamanan dan stabilitas luar biasa. Desain elegan dan versatile, cocok untuk tampil santai namun tetap fashionable.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk4.jpg" alt="ADIDAS SAMBA OG">
+          <h3>ADIDAS SAMBA OG</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Sepatu ikonik dengan desain klasik dari Adidas, menampilkan kombinasi kulit dan suede premium. Sol karet yang kuat memberikan kenyamanan dan daya tahan, cocok untuk gaya casual sehari-hari.</p>
+          <p>Rp 2.200.000</p>
+          <button onclick="openProductModal(
+          'ADIDAS SAMBA OG',
+          2200000,
+          'images/Produk4.jpg',
+          'Sepatu ikonik dengan desain klasik dari Adidas, menampilkan kombinasi kulit dan suede premium. Sol karet yang kuat memberikan kenyamanan dan daya tahan, cocok untuk gaya casual sehari-hari.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk5.jpg" alt="ADIDAS CAMPUS 00S">
+          <h3>ADIDAS CAMPUS 00S</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Gaya vintage dengan sentuhan modern, Campus 00s memiliki desain simpel, upper suede, dan sol karet yang nyaman. Sepatu yang sempurna untuk tampilan santai namun tetap stylish.</p>
+          <p>Rp 1.700.000</p>
+          <button onclick="openProductModal(
+          'ADIDAS CAMPUS 00S',
+          1700000,
+          'images/Produk5.jpg',
+          'Gaya vintage dengan sentuhan modern, Campus 00s memiliki desain simpel, upper suede, dan sol karet yang nyaman. Sepatu yang sempurna untuk tampilan santai namun tetap stylish.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk6.jpg" alt="ADIDAS GAZELLE">
+          <h3>ADIDAS GAZELLE</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Desain retro yang tetap populer, Gazelle hadir dengan bahan suede berkualitas tinggi dan sol karet, menciptakan kenyamanan dan gaya legendaris yang tak lekang oleh waktu.</p>
+          <p>Rp 1.700.000</p>
+          <button onclick="openProductModal(
+          'ADIDAS GAZELLE',
+          1700000,
+          'images/Produk6.jpg',
+          'Desain retro yang tetap populer, Gazelle hadir dengan bahan suede berkualitas tinggi dan sol karet, menciptakan kenyamanan dan gaya legendaris yang tak lekang oleh waktu.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk7.jpg" alt="ASICS Gel Kayano 14">
+          <h3>ASICS Gel Kayano 14</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Perpaduan teknologi canggih dengan desain vintage, Gel Kayano 14 menawarkan kenyamanan luar biasa dengan teknologi Gel cushioning yang responsif. Ideal untuk lari dan aktivitas sehari-hari.</p>
+          <p>Rp 2.299.000</p>
+          <button onclick="openProductModal(
+          'ASICS Gel Kayano 14',
+          2299000,
+          'images/Produk7.jpg',
+          'Perpaduan teknologi canggih dengan desain vintage, Gel Kayano 14 menawarkan kenyamanan luar biasa dengan teknologi Gel cushioning yang responsif. Ideal untuk lari dan aktivitas sehari-hari.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk8.jpg" alt="ASICS FX GEL-1130 UNISEX">
+          <h3>ASICS FX GEL-1130 UNISEX</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Dengan teknologi Gel cushioning, Gel 1130 memberikan dukungan maksimal dan kenyamanan luar biasa. Desain modern dengan elemen retro, cocok untuk gaya hidup aktif.</p>
+          <p>Rp 1.699.000</p>
+          <button onclick="openProductModal(
+          'ASICS FX GEL-1130 UNISEX',
+          1699000,
+          'images/Produk8.jpg',
+          'Dengan teknologi Gel cushioning, Gel 1130 memberikan dukungan maksimal dan kenyamanan luar biasa. Desain modern dengan elemen retro, cocok untuk gaya hidup aktif.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk9.jpg" alt="PUMA BASKET CLASSIC XXI">
+          <h3>PUMA BASKET CLASSIC XXI</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Sepatu klasik dari Puma dengan desain simpel dan elegan. Upper kulit premium dan sol karet memberikan kenyamanan, sementara tampilan bersih dan timeless cocok untuk berbagai gaya.</p>
+          <p>Rp 1.499.000</p>
+                  <button onclick="openProductModal(
+          'PUMA BASKET CLASSIC XXI',
+          1499000,
+          'images/Produk9.jpg',
+          'Sepatu klasik dari Puma dengan desain simpel dan elegan. Upper kulit premium dan sol karet memberikan kenyamanan, sementara tampilan bersih dan timeless cocok untuk berbagai gaya.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk10.jpg" alt="PUMA SPEEDCAT OG UNISEX LIFESTYLE">
+          <h3>PUMA SPEEDCAT OG UNISEX LIFESTYLE</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Inspirasi dari sepatu balap, Speedcat OG menawarkan desain sporty dengan upper kulit premium dan sol karet anti-slip, memberikan kenyamanan dan gaya dinamis.</p>
+          <p>Rp 1.899.000</p>
+         <button onclick="openProductModal(
+          'PUMA SPEEDCAT OG UNISEX LIFESTYLE',
+          1899000,
+          'images/Produk10.jpg',
+          'Inspirasi dari sepatu balap, Speedcat OG menawarkan desain sporty dengan upper kulit premium dan sol karet anti-slip, memberikan kenyamanan dan gaya dinamis.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk11.jpg" alt="SALOMON ACS PLUS CSWP">
+          <h3>SALOMON ACS PLUS CSWP</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Dengan teknologi canggih, Salomon ACS Plus CSWD dirancang untuk medan ekstrem. Sepatu outdoor ini memberikan stabilitas, kenyamanan, dan daya tahan luar biasa, cocok untuk petualangan di alam bebas.</p>
+          <p>Rp 3.399.000</p>
+          <button onclick="openProductModal(
+          'SALOMON ACS PLUS CSWP',
+          3399000,
+          'images/Produk11.jpg',
+          'Dengan teknologi canggih, Salomon ACS Plus CSWD dirancang untuk medan ekstrem. Sepatu outdoor ini memberikan stabilitas, kenyamanan, dan daya tahan luar biasa, cocok untuk petualangan di alam bebas.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk12.jpg" alt="NIKE AIR JORDAN 1 LOW MEN'S">
+          <h3>NIKE AIR JORDAN 1 LOW MEN'S</h3>
+          <p><strong>Kategori:</strong> Sepatu</p>
+          <p>Desain ikonik dengan sentuhan modern, Air Jordan 1 Low menggabungkan kenyamanan dan gaya. Dengan bahan kulit premium dan sol karet yang tahan lama, sepatu ini cocok untuk tampilan kasual dan streetwear.</p>
+          <p>Rp 1.729.000</p>
+          <button onclick="openProductModal(
+          'NIKE AIR JORDAN 1 LOW MEN\'S',
+          1729000,
+          'images/Produk12.jpg',
+          'Desain ikonik dengan sentuhan modern, Air Jordan 1 Low menggabungkan kenyamanan dan gaya. Dengan bahan kulit premium dan sol karet yang tahan lama, sepatu ini cocok untuk tampilan kasual dan streetwear.',
+          'Sepatu'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk13.jpg">
+          <h3>CROCS CLASSIC UNISEX CLOG</h3>
+          <p><strong>Kategori:</strong> Sandal</p>
+          <p>Sandal ringan dan nyaman dengan bahan tahan air, desain ventilasi untuk sirkulasi udara, serta tali tumit yang bisa diputar. Cocok untuk dipakai sehari-hari dan mudah dipersonalisasi dengan Jibbitz™.</p>
+          <p>Rp 999.000</p>
+          <button onclick="openProductModal(
+          'CROCS CLASSIC UNISEX CLOG',
+          999000,
+          'images/Produk13.jpg',
+          'Sandal ringan dan nyaman dengan bahan tahan air, desain ventilasi untuk sirkulasi udara, serta tali tumit yang bisa diputar. Cocok untuk dipakai sehari-hari dan mudah dipersonalisasi dengan Jibbitz™.',
+          'Sandal'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk14.jpg" alt="NBA LAKERS">
+          <h3>NBA LAKERS</h3>
+          <p><strong>Kategori:</strong> Hoodie</p>
+          <p>Tampilkan dukunganmu untuk tim favorit dengan hoodie resmi NBA Lakers. Desain stylish dengan logo ikonik Lakers, bahan nyaman dan hangat, cocok untuk gaya kasual maupun nonton bareng pertandingan.</p>
+          <p>Rp 699.000</p>
+          <button onclick="openProductModal(
+          'NBA LAKERS',
+          699000,
+          'images/Produk14.jpg',
+          'Tampilkan dukunganmu untuk tim favorit dengan hoodie resmi NBA Lakers. Desain stylish dengan logo ikonik Lakers, bahan nyaman dan hangat, cocok untuk gaya kasual maupun nonton bareng pertandingan.',
+          'Hoodie'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk15.jpg" alt="ADIDAS MERCEDES-AMG PETRONAS FORMULA ONE TEAM UNISEX">
+          <h3>ADIDAS MERCEDES-AMG PETRONAS FORMULA ONE TEAM UNISEX</h3>
+          <p><strong>Kategori:</strong> Topi</p>
+          <p>Tunjukkan dukunganmu pada tim balap juara dunia dengan topi resmi Mercedes-AMG Petronas. Desain elegan warna hitam, logo tim khas, dan bahan berkualitas untuk kenyamanan maksimal di setiap kesempatan.</p>
+          <p>Rp 840.000</p>
+                <button onclick="openProductModal(
+          'ADIDAS MERCEDES-AMG PETRONAS FORMULA ONE TEAM UNISEX',
+          840000,
+          'images/Produk15.jpg',
+          'Tunjukkan dukunganmu pada tim balap juara dunia dengan topi resmi Mercedes-AMG Petronas. Desain elegan warna hitam, logo tim khas, dan bahan berkualitas untuk kenyamanan maksimal di setiap kesempatan.',
+          'Topi'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk16.jpg" alt="ADIDAS ADICOLOR CLASSICS 3-STRIPES">
+          <h3>ADIDAS ADICOLOR CLASSICS 3-STRIPES</h3>
+          <p><strong>Kategori:</strong> T-Shirt</p>
+          <p>Kaos kasual dengan sentuhan klasik dari tiga garis ikonik di kedua lengan. Dibuat dari bahan katun lembut yang nyaman dipakai sepanjang hari, kaos ini memadukan gaya sporty dan simpel, cocok untuk tampilan santai namun tetap stylish.</p>
+          <p>Rp 600.000</p>
+                  <button onclick="openProductModal(
+          'ADIDAS ADICOLOR CLASSICS 3-STRIPES',
+          600000,
+          'images/Produk16.jpg',
+          'Kaos kasual dengan sentuhan klasik dari tiga garis ikonik di kedua lengan. Dibuat dari bahan katun lembut yang nyaman dipakai sepanjang hari, kaos ini memadukan gaya sporty dan simpel, cocok untuk tampilan santai namun tetap stylish.',
+          'Kaos'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk17.jpg" alt="ELLESSE MENS-ANTHRACITE">
+          <h3>ELLESSE MENS-ANTHRACITE</h3>
+          <p><strong>Kategori:</strong> Jaket</p>
+          <p>Menghadirkan perpaduan gaya sporty dan kasual dengan desain modern dan detail logo khas Ellesse. Terbuat dari bahan berkualitas yang nyaman dan tahan lama, jaket ini cocok untuk berbagai aktivitas harian dan tampilan gaya yang stylish.</p>
+          <p>Rp 899.000</p>
+          <button onclick="openProductModal(
+          'ELLESSE MENS-ANTHRACITE',
+          899000,
+          'images/Produk17.jpg',
+          'Menghadirkan perpaduan gaya sporty dan kasual dengan desain modern dan detail logo khas Ellesse. Terbuat dari bahan berkualitas yang nyaman dan tahan lama, jaket ini cocok untuk berbagai aktivitas harian dan tampilan gaya yang stylish.',
+          'Jaket'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk18.jpg" alt="NIKE ELEMENTAL PRO UNISEX">
+          <h3>NIKE ELEMENTAL PRO UNISEX</h3>
+          <p><strong>Kategori:</strong> Tas</p>
+          <p>Tas punggung tahan air dengan desain simpel dan fungsional. Dilengkapi kompartemen utama luas, saku laptop, dan tali bahu empuk, cocok untuk aktivitas harian maupun olahraga.</p>
+          <p>Rp 979.000</p>
+                <button onclick="openProductModal(
+          'NIKE ELEMENTAL PRO UNISEX',
+          979000,
+          'images/Produk18.jpg',
+          'Tas punggung tahan air dengan desain simpel dan fungsional. Dilengkapi kompartemen utama luas, saku laptop, dan tali bahu empuk, cocok untuk aktivitas harian maupun olahraga.',
+          'Tas'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk19.jpg" alt="NIKE EVERYDAY ESSENTIAL 1PR 168 AM TN UNISEX">
+          <h3>NIKE EVERYDAY ESSENTIAL 1PR 168 AM TN UNISEX</h3>
+          <p><strong>Kategori:</strong> Kaos Kaki</p>
+          <p>Kaus kaki unisex yang nyaman untuk dipakai sehari-hari. Terbuat dari bahan lembut dan elastis dengan desain crew fit, memberikan dukungan dan gaya simpel yang pas untuk berbagai aktivitas.</p>
+          <p>Rp 979.000</p>
+          <button onclick="openProductModal(
+          'NIKE EVERYDAY ESSENTIAL 1PR 168 AM TN UNISEX',
+          979000,
+          'images/Produk19.jpg',
+          'Kaus kaki unisex yang nyaman untuk dipakai sehari-hari. Terbuat dari bahan lembut dan elastis dengan desain crew fit, memberikan dukungan dan gaya simpel yang pas untuk berbagai aktivitas.',
+          'Kaos Kaki'
+        )">Beli</button>
+        </article>
+
+        <article class="produk">
+          <img src="images/Produk20.jpg" alt="CROCS SPACE CADET 5 PACK JIBBITZ">
+          <h3>CROCS SPACE CADET 5 PACK JIBBITZ</h3>
+          <p><strong>Kategori:</strong> Aksesoris</p>
+          <p>Set hiasan sepatu bertema luar angkasa yang terdiri dari lima charm unik, termasuk tiga alien berwarna-warni, satu UFO, dan satu bintang jatuh.</p>
+          <p>Rp 459.000</p>
+         <button onclick="openProductModal(
+          'CROCS SPACE CADET 5 PACK JIBBITZ',
+          459000,
+          'images/Produk20.jpg',
+          'Set hiasan sepatu bertema luar angkasa yang terdiri dari lima charm unik, termasuk tiga alien berwarna-warni, satu UFO, dan satu bintang jatuh.',
+          'Aksesoris'
+        )">Beli</button>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="tentang-kami" style="padding: 40px; text-align: center;">
+      <h2>Tentang Kami</h2>
+      <p>Kami adalah platform e-commerce sederhana yang menyediakan berbagai produk fashion dan lifestyle dari brand ternama. Kami berkomitmen memberikan pengalaman belanja yang mudah, cepat, dan terpercaya untuk semua pelanggan.</p>
+    </section>
+
+    <section id="kontak" style="padding: 40px; text-align: center;">
+      <h2>Kontak</h2>
+      <p>Email: cs@UrbanStride.com</p>
+      <p>Telepon: 0812-3456-7890</p>
+      <p>Instagram: @UrbanStride.id</p>
+    </section>
+
+    <!-- Modal Checkout -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePaymentModal()">&times;</span>
+    <h2>Checkout</h2>
+    <form id="paymentForm" onsubmit="return false;">
+      <div class="form-group">
+        <label for="name">Nama Lengkap:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Alamat Pengiriman:</label>
+        <input type="text" id="address" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Nomor Telepon:</label>
+        <input type="text" id="phone" required>
+      </div>
+      <div class="form-group" id="sizeGroup" style="display:none;">
+        <label for="size">Ukuran:</label>
+        <select id="size"></select>
+      </div>
+      <div class="form-group">
+        <label>Metode Pembayaran:</label>
+        <div class="payment-methods">
+          <label><input type="radio" name="paymentMethod" value="creditCard" required> Credit Card</label>
+          <label><input type="radio" name="paymentMethod" value="virtualAccount"> Virtual Account</label>
+          <label><input type="radio" name="paymentMethod" value="qris"> QRIS</label>
+          <label><input type="radio" name="paymentMethod" value="ewallet"> E-Wallet</label>
+        </div>
+      </div>
+      <button type="button" id="payButton">Bayar</button>
+    </form>
+  </div>
+</div>
+  </main>
+
+  <footer style="background-color: #292828; color: white; text-align: center; padding: 10px;">
+    <p>&copy; 2025 Hak Cipta Dilindungi. Dibuat oleh Fajar Rizki Alfian.</p>
+  </footer>
+
+</body>
+
+</html>
