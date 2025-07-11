@@ -884,3 +884,77 @@ footer p {
 #paymentModal .close:hover {
   color: #e91e63;
 }
+
+/* Form Modal Checkout */
+#paymentModal .modal-content {
+  max-width: 400px;
+  margin: auto;
+  padding: 32px 28px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+#paymentForm .form-group {
+  margin-bottom: 18px;
+}
+
+#paymentForm label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+#paymentForm input[type="text"],
+#paymentForm select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fafafa;
+  margin-bottom: 2px;
+  transition: border 0.2s;
+}
+
+#paymentForm input[type="text"]:focus,
+#paymentForm select:focus {
+  border-color: #ff4b7d;
+  outline: none;
+}
+
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-top: 8px;
+}
+
+.payment-methods label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+#payButton {
+  width: 100%;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #ff4b7d 0%, #ff7c4b 100%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255,75,125,0.08);
+  transition: background 0.2s;
+}
+
+#payButton:hover {
+  background: linear-gradient(90deg, #ff7c4b 0%, #ff4b7d 100%);
+}
