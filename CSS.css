@@ -36,58 +36,89 @@ main {
 /* =================================
    Bagian Navbar
    ================================= */
+/* =================================
+   Navbar Profesional (Revisi)
+   ================================= */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--secondary-color);
-  padding: 0 30px;
+  background-color: var(--secondary-color); /* #292828 */
+  padding: 0 40px; /* Padding lebih luas di sisi */
   height: 70px;
-  color: var(--text-light);
+  color: var(--text-light); /* #fff */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15); /* Shadow lebih jelas */
+  transition: background-color 0.3s ease;
 }
 
+/* Bagian Kiri: Nama Brand */
 .nav-kiri h1 {
-  font-size: 25px;
-}
-
-.nav-tengah ul {
-  display: flex;
-  gap: 30px;
-  list-style: none;
-}
-
-.nav-tengah ul li a {
+  font-size: 26px;
+  font-weight: 700; /* Lebih tebal */
   color: var(--text-light);
-  font-weight: 500;
-  font-size: 1.05rem;
+  letter-spacing: 1px; /* Jarak antar huruf */
+}
+
+/* Bagian Tengah: Link Navigasi */
+.nav-tengah {
+  display: flex;
+  gap: 35px; /* Jarak antar link */
+}
+
+.nav-tengah a {
+  color: #e0e0e0; /* Warna putih gading agar tidak terlalu silau */
   text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 5px 0;
+  position: relative; /* Diperlukan untuk garis bawah hover */
   transition: color 0.3s ease;
 }
 
-.nav-tengah ul li a:hover,
-.nav-tengah ul li a.active {
-  color: var(--primary-color);
+/* Efek Hover: Warna berubah dan ada garis bawah animasi */
+.nav-tengah a:hover {
+  color: var(--text-light); /* Warna jadi putih terang saat disentuh */
 }
 
+.nav-tengah a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary-color); /* Warna pink */
+  transition: width 0.3s ease;
+}
+
+.nav-tengah a:hover::after {
+  width: 100%; /* Garis bawah muncul saat di-hover */
+}
+
+
+/* Bagian Kanan: Search, Keranjang, Login */
 .nav-kanan {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .search-container {
   display: flex;
   align-items: center;
-  background: var(--background-white);
-  border-radius: 999px;
-  padding: 5px 12px;
-  border: 1px solid #eee;
+  background-color: #444; /* Background search lebih gelap */
+  border-radius: 20px;
+  padding: 6px 12px;
+  transition: background-color 0.3s;
+}
+.search-container:focus-within {
+  background-color: #555; /* Warna berubah saat mengetik */
 }
 
 .search-container input {
@@ -96,28 +127,30 @@ main {
   background: none;
   width: 150px;
   font-size: 14px;
-}
-
-.search-container button {
-  background: none;
-  border: none;
-  color: var(--text-dark);
-  cursor: pointer;
-  font-size: 1.1rem;
-}
-
-.icon-btn {
-  background: none;
-  border: none;
   color: var(--text-light);
-  font-size: 1.3rem;
+}
+.search-container input::placeholder {
+  color: #aaa;
+}
+
+/* Tombol Ikon (Search & Cart) */
+.search-container button,
+.cart-btn {
+  background: none;
+  border: none;
+  color: #e0e0e0;
   cursor: pointer;
+  font-size: 18px; /* Ukuran ikon lebih besar */
   transition: color 0.3s ease;
 }
-
-.icon-btn:hover {
+.search-container button:hover,
+.cart-btn:hover {
   color: var(--primary-color);
 }
+
+/* Link/Tombol Login */
+.nav-kanan > a {
+  color: var(--text-light);
 
 /* =================================
    Bagian Hero Section
