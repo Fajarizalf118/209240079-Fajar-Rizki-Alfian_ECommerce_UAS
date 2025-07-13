@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
+<!-- Bagian Navbar -->
 <body>
   <header>
     <nav class="navbar">
@@ -79,18 +80,69 @@
       </div>
     </section>
 
+    <section class="kategori-slider">
+    <h2 class="kategori-title">Pilih Berdasarkan Kategori</h2>
+    <div class="slider-container">
+        <button class="slider-btn" onclick="slideKategori(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="slider-track" id="kategoriTrack">
+            <div class="kategori-card">
+            <img src="produk5.jpg" alt="Sepatu">
+            </div>
+            <div class="kategori-card">
+                <img src="produk13.jpg" alt="Sandal">
+                <p>Sandal</p>
+            </div>
+            <div class="kategori-card">
+                <img src="produk14.jpg" alt="Hoodie">
+                <p>Hoodie</p>
+            </div>
+            <div class="kategori-card">
+                <img src="produk15.jpg" alt="Topi">
+                <p>Topi</p>
+            </div>
+            <div class="kategori-card">
+                <img src="produk16.jpg" alt="Kaos">
+                <p>T-Shirt</p>
+            </div>
+            <div class="kategori-card">
+                <img src="produk17.jpg" alt="Jaket">
+                <p>Jaket</p>
+            </div>
+            <div class="kategori-card">
+                <img src="produk18.jpg" alt="Tas">
+                <p>Tas</p>
+            </div>
+            <div class="kategori-card">
+                <img src="Produk19.jpg" alt="Kaos Kaki">
+                <p>Kaos Kaki</p>
+            </div>
+            <div class="kategori-card">
+                <img src="produk20.jpg" alt="Aksesoris">
+                <p>Aksesoris</p>
+            </div>
+        </div>
+
+        <button class="slider-btn" onclick="slideKategori(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
+
     <!-- Pop-Up Keranjang -->
     <div id="cartModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="tutupKeranjang()">&times;</span>
         <h2>Keranjang Belanja</h2>
         <div id="cartItems">
-          <!-- Produk yang ditambahkan ke keranjang akan muncul di sini -->
         </div>
         <button onclick="checkout()">Checkout</button>
       </div>
     </div>
-
+    
+    <!-- Poduk -->
     <section id="produk">
       <div class="section-gap">
         <h2 class="produk-title">Produk</h2>
@@ -401,11 +453,13 @@
       </div>
     </section>
 
+    <!-- Bagian Tentang Kami -->
     <section id="tentang-kami" style="padding: 40px; text-align: center;">
       <h2>Tentang Kami</h2>
       <p>Kami adalah platform e-commerce sederhana yang menyediakan berbagai produk fashion dan lifestyle dari brand ternama. Kami berkomitmen memberikan pengalaman belanja yang mudah, cepat, dan terpercaya untuk semua pelanggan.</p>
     </section>
 
+    <!-- Bagian Kontak -->
     <section id="kontak" style="padding: 40px; text-align: center;">
       <h2>Kontak</h2>
       <p>Email: cs@UrbanStride.com</p>
@@ -452,6 +506,7 @@
 </div>
   </main>
 
+  <!-- Bagian Footer -->
   <footer style="background-color: #292828; color: white; text-align: center; padding: 10px;">
     <p>&copy; 2025 Hak Cipta Dilindungi. Dibuat oleh Fajar Rizki Alfian.</p>
   </footer>
