@@ -266,15 +266,3 @@ function showSizeOptions(kategori) {
     sizeSelect.required = false;
   }
 }
-
-// --- FUNGSI SLIDER KATEGORI ---
-
-// Fungsi untuk menggeser slider kategori ke kiri atau kanan
-function slideKategori(direction) {
-  const track = document.getElementById('kategoriTrack');
-  // Menghitung lebar satu kartu ditambah jarak (gap)
-  const cardWidth = track.querySelector('.kategori-card').offsetWidth + 24; 
-  
-  // Menggeser track sejauh 2 kartu ke arah yang ditentukan (direction: -1 untuk kiri, 1 untuk kanan)
-  track.scrollBy({ left: direction * cardWidth * 2, behavior: 'smooth' });
-}
